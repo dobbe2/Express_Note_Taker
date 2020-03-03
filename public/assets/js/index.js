@@ -27,7 +27,7 @@ var saveNote = function(note) {
 // A function for deleting a note from the db
 var deleteNote = function(id) {
   return $.ajax({
-    url: "api/notes/" + id,
+    url: "api/notes/" + id,   
     method: "DELETE"
   });
 };
@@ -57,6 +57,7 @@ var handleNoteSave = function() {
   };
 
   saveNote(newNote).then(function(data) {
+    console.log("I am back from the post")
     getAndRenderNotes();
     renderActiveNote();
   });
@@ -74,7 +75,7 @@ var handleNoteDelete = function(event) {
   if (activeNote.id === note.id) {
     activeNote = {};
   }
-
+//HOMEWORK TIP when api/notes gets to deleteNote, must acknowledge this 'then' on 78
   deleteNote(note.id).then(function() {
     getAndRenderNotes();
     renderActiveNote();
