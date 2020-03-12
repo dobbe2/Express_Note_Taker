@@ -4,7 +4,7 @@
   "description": "Express Note Taker",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node noteTaker.js"
     },
   "author": "",
   "license": "ISC",
