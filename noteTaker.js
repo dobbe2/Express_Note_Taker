@@ -4,7 +4,7 @@ const path = require("path");
 const express = require("express");
 
 //Set up Express server
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 const app = express();
 
 app.use(express.json());
@@ -12,13 +12,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 //API routes
+//required HTML route for "/"
+app.get("/", function (req,res){
+    res.json(path.join(__dirname, "public/index.html"));
+});
+
 //  /api/notes GET- read JSON file and return all saved JSON notes (savedNotes)
 app.get("/api/notes", (req, result) => {
     fs.readFile("db/db.json", "utf8", function (err, notes) {
         result.json(JSON.parse(notes))
         console.log(notes)
     })
-
 });
 
 //  /api/notes POST- recieve new note and save onto the request body, add to db.json, then return new note to client
@@ -36,7 +40,6 @@ app.post("/api/notes", function (req, res) {
         fs.writeFile("db/db.json", JSON.stringify(notesArray), function (err, data) {
             res.json("done")
         })
-
     })
 })
 
@@ -55,7 +58,6 @@ app.delete("/api/notes/:noteId", function (req, res) {
         fs.writeFile("db/db.json", JSON.stringify(notesTemp), function (err, data) {
             res.json("done")
         })
-
     })
 })
 
